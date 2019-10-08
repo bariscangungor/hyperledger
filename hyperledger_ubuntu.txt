@@ -1,0 +1,46 @@
+sudo apt-get update
+
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+
+sudo apt-key fingerprint 0EBFCD88
+# check fingerprint begins with 9DC8 ends with CD88
+
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+
+sudo docker run hello-world
+sudo usermod -aG docker ubuntu
+
+sudo systemctl enable docker
+echo manual | sudo tee /etc/init/docker.override
+
+curl -sSL http://bit.ly/2ysbOFE | bash -s
+export PATH=/home/ubuntu/fabric-samples/bin:$PATH
+
+sudo apt install docker-compose
+
+wget https://dl.google.com/go/go1.13.1.linux-amd64.tar.gz
+sudo tar -xvf go1.13.1.linux-amd64.tar.gz
+sudo mv go /usr/local
+
+export GOPATH=/usr/local/go
+export PATH=$PATH:$GOPATH/bin
+
+sudo apt-get install nodejs
+#node.js min. 8.9.4 or min. 10.15.3 is a must
+
+sudo apt-get install python
+#python 2.7 is a must
+
+---------------------------------------------------------------
+
+sudo ./byfn.sh -m down
+sudo ./byfn.sh -m generate
+sudo ./byfn.sh -m up
